@@ -5,25 +5,12 @@ var userzip = 80210;
 var distances = [];
 var maxDistance = 150;
 var users = {};
-// var distanceURL = "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" + userzip + "&tozipcode=" + zipcodes[i] + "&key=DEMOAPIKEY";
-// var distanceURL = "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" + userzip + "&tozipcode=" + zipcodes + "&key=DEMOAPIKEY";
+var userInput = 0;
 
-// $.ajax( {
-//   // url: queryURL,
-//   url: distanceURL,
-//   method: "GET"
-// }).done(function(response) {
-//   // console.log(response);
-//   // console.log(response.FromPointDetails.FromZipCode);
-//   var results = response.DistanceInMiles;
-// console.log(results);
-//   for (var i = 0; i < zipcodes.length; i++) {
-//     if (userzip === zipcodes[i]) {
-//       console.log("hey");
-//     }
-//     console.log(zipcodes[i]);
-//   }
-// });
+
+
+$("#submit").on("click" , function(event) {
+  console.log("joe");
 
 $.each(zipcodes, function(i, v) {
   // distanceURL = "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" + userzip + "&tozipcode=" + i + "&key=DEMOAPIKEY";
@@ -57,3 +44,6 @@ $.each(zipcodes, function(i, v) {
   console.log("people who we email", users);
 })
 });
+});
+
+
