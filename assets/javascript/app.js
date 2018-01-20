@@ -1,7 +1,7 @@
 var zipcodes = [80210, 80203, 80218, 80205, 87114, 77090];
 var testZip = 77090;
 var queryURL = "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=80203&tozipcode=80210&key=DEMOAPIKEY";
-var userzip = 80210;
+var userzip = 80203;
 var distances = [];
 var maxDistance = 150;
 var users = [];
@@ -13,16 +13,16 @@ var customers = [
   email: "josephwilliamgj11@gmail.com",
   zip: 77090
 },
-{
-  name: "Ken Lee",
-  email: "wewert@gmail.com",
-  zip: 80210
-},
-{
-  name: "Amy Christine",
-  email: "amychristine29@gmail.com",
-  zip: 80203
-},
+// {
+//   name: "Ken Lee",
+//   email: "wewert@gmail.com",
+//   zip: 80210
+// },
+// {
+//   name: "Amy Christine",
+//   email: "amychristine29@gmail.com",
+//   zip: 80203
+// },
 {
   name: "Saijai Osika",
   email: "hewjang@gmail.com",
@@ -31,13 +31,18 @@ var customers = [
 
 
 
-// $("#submit").on("click" , function(event) {
-//   console.log("joe");
+$(document).on("click" , "#new-campaign-button" , function(event) {
+  determineDistance();
+  console.log("joe");
+
+});
 
 
-
+function determineDistance() {
 
 $.each(customers, function(i , v) {
+  userzip = $("#user-zip");
+
   // distanceURL = "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" + userzip + "&tozipcode=" + i + "&key=DEMOAPIKEY";
   $.ajax( {
     url: "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" + userzip + "&tozipcode=" + v.zip + "&key=WXC5A3ACU3D13WNY58D7",
@@ -56,7 +61,8 @@ $.each(customers, function(i , v) {
     users[i] = {
       zip: v.zip,
       name: v.name,
-      email: v.email
+      email: v.email,
+      distance: results
      
 
     //[variable]: value -- this will allow for variable based property names because of the square bracket notation
@@ -65,4 +71,6 @@ $.each(customers, function(i , v) {
   console.log("people who we email", users);
 });
 });
-// });
+}
+
+
