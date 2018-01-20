@@ -1,7 +1,17 @@
+var config = {
+    apiKey: “AIzaSyAYcEFQz7-dPSlnRzDkHOmkyoh53zWwab4”,
+    authDomain: “dinotech-42ff0.firebaseapp.com”,
+    databaseURL: “https://dinotech-42ff0.firebaseio.com“,
+    projectId: “dinotech-42ff0”,
+    storageBucket: “”,
+    messagingSenderId: “1029126190429”
+  };
+  firebase.initializeApp(config);
+
 var zipcodes = [80210, 80203, 80218, 80205, 87114, 77090];
 var testZip = 77090;
 var queryURL = "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=80203&tozipcode=80210&key=DEMOAPIKEY";
-var userzip = 80203;
+var userzip = "";
 var distances = [];
 var maxDistance = 150;
 var users = [];
@@ -30,18 +40,10 @@ var customers = [
 }];
 
 
-
-$(document).on("click" , "#new-campaign-button" , function(event) {
-  determineDistance();
-  console.log("joe");
-
-});
-
-
 function determineDistance() {
 
 $.each(customers, function(i , v) {
-  // userzip = $("#user-zip");
+  userzip = $("#user-zip").val().trim();
 
   // distanceURL = "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" + userzip + "&tozipcode=" + i + "&key=DEMOAPIKEY";
   $.ajax( {
@@ -49,16 +51,7 @@ $.each(customers, function(i , v) {
     method: "GET"
   }).done(function(response) { 
     var results = response.DistanceInMiles;
-    // console.log(userzip);
-  console.log('our results', i, v, results);
-  console.log(response);
-
-
   
- 
-
-
-  // if (results <= maxDistance) {
     if (results <= maxDistance) {
       
     users[i] = {
@@ -77,6 +70,9 @@ $.each(customers, function(i , v) {
 
 }
 
-determineDistance();
+$(document).on("click" , "#new-campaign-button" , function(event) {
+  event.preventDefault();
+  determineDistance();
+  console.log(userzip);
 
-
+});
