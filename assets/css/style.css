@@ -12,8 +12,7 @@ header {
   background-color: #f0ad4e;
 }
 
-#campaign,
-#markets {
+#campaign-drop {
   width: 25%;
 }
 /* Remove the navbar's default margin-bottom and rounded borders */
