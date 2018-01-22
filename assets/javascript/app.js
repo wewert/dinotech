@@ -22,30 +22,30 @@ var userInput = 0;
 var campaignName = "";
 
 var customers = [
-  // {
-  //   fname: "Joe",
-  //   lname: "Arnold",
-  //   email: "josephwilliamgj11@gmail.com",
-  //   zip: 77090
-  // }
   {
-    fname: "Ken",
-    lname: "Lee",
-    email: "wewert@gmail.com",
-    zip: 80210
-  },
-  {
-    fname: "Amy",
-    lname: "Christine",
-    email: "amychristine29@gmail.com",
-    zip: 80203
-  },
-  {
-    fname: "Saijai",
-    lname: "Osika",
-    email: "hewjang@gmail.com",
-    zip: 80218
+    fname: "Joe",
+    lname: "Arnold",
+    email: "josephwilliamgj11@gmail.com",
+    zip: 77090
   }
+  // {
+  //   fname: "Ken",
+  //   lname: "Lee",
+  //   email: "wewert@gmail.com",
+  //   zip: 80210
+  // },
+  // {
+  //   fname: "Amy",
+  //   lname: "Christine",
+  //   email: "amychristine29@gmail.com",
+  //   zip: 80203
+  // },
+  // {
+  //   fname: "Saijai",
+  //   lname: "Osika",
+  //   email: "hewjang@gmail.com",
+  //   zip: 80218
+  // }
 ];
 
 function determineDistance() {
@@ -96,54 +96,9 @@ function determineDistance() {
     });
   });
 }
-
 $(document).on("click", "#new-campaign-button", function(event) {
   event.preventDefault();
   determineDistance();
   console.log(userzip);
-  $("#available-emails").prepend(name);
-});
-
-//for campaigns report.  When select a campaign in the drop down and hit report it will change the values in the grid display of emails sent by that campaign
-$(document).on("click", "#campaign-list-button", function(event) {
-  event.preventDefault();
-  var campaignReport = $("#campaign-drop")
-    .val()
-    .toUpperCase()
-    .trim();
-  console.log("campaignReport: ", campaignReport);
-
-  database
-    .ref()
-    .orderByChild("lname")
-    .on(
-      "child_added",
-      function(childSnapshot) {
-        var tBody = $("tbody");
-        var tRow = $("<tr>");
-
-        console.log(childSnapshot.val().zip);
-        console.log(childSnapshot.val().lname);
-        console.log(childSnapshot.val().email);
-        var campaignDatabase = childSnapshot.val().campaignName;
-        console.log("campaignDatabase: ", campaignDatabase);
-        console.log("campaignReport: ", campaignReport);
-
-        if (campaignReport === campaignDatabase) {
-          // full list of items to the well
-          var zipCreport = $("<td>").text(childSnapshot.val().zip);
-          var fnameCreport = $("<td>").text(childSnapshot.val().fname);
-          var lnameCreport = $("<td>").text(childSnapshot.val().lname);
-          var emailCreport = $("<td>").text(childSnapshot.val().email);
-
-          tRow.append(zipCreport, fnameCreport, lnameCreport, emailCreport);
-          tBody.append(tRow);
-        }
-
-        // Handle the errors
-      },
-      function(errorObject) {
-        console.log("Errors handled: " + errorObject.code);
-      }
-    );
+  // $("#available-emails").prepend(name);
 });
