@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <link rel="stylesheet" href="assets/css/style.css">
 
 
@@ -36,7 +37,7 @@
             </div>
 
             <div class="col-sm-10 text-left">
-                <h2>Event Marketing Email Blast</h2>
+                <h2>Choose Your Target Market</h2>
                 <form class="form-horizontal">
                     <div class="form-group">
 
@@ -71,9 +72,34 @@
                         </div>
                     </div>
                 </form>
+                <h2>Send Email Blast</h2>
+                    <form id="form" class="form-horizontal">
+                     <div class="form-group">
+
+                        <label class="control-label col-sm-2" for="user">Subject:</label>
+                        <div class="col-sm-10">
+                            <input type="subject" class="form-control" id="subject" placeholder="Enter Range in Miles" name="subject">
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label class="control-label col-sm-2" for="user">Body:</label>
+                        <div class="col-sm-10">
+                            <input type="subject" class="form-control" id="body" placeholder="Enter Range in Miles" name="subject">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" id="send-email-button" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+                    
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
     <footer class="container-fluid text-center">
         <p>© Copyright 2018 DinoTech Team</p>
