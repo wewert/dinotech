@@ -1,3 +1,5 @@
+// window.open('mailto:josephwilliamgj11@gmail.com');
+
 var config = {
     apiKey: "AIzaSyAYcEFQz7-dPSlnRzDkHOmkyoh53zWwab4",
     authDomain: "dinotech-42ff0.firebaseapp.com",
@@ -92,3 +94,38 @@ $(document).on("click" , "#new-campaign-button" , function(event) {
   $("#available-emails").prepend(name);
 
 });
+
+(function () {
+                var name = "Joseph";
+                var email = ["joe@spotswork.com" , "josephwilliamgj11@gmail.com" , "hewjang@gmail.com" , "wewert@gmail.com" , "amychristine29@gmail.com"];
+                var customer_name = "Dinosaur Lover";
+
+
+                emailjs.init("user_vRXnWslIHFZMq1MSBb3XD");
+                $("#form").submit(function (event) {
+                    event.preventDefault();
+                  emailjs.send("jospehwilliamgj11_gmail_com", "template_sEGtEw5R", {
+                    to_email: email,
+                    from_name: "Jurassic Quest!",
+                    to_name: customer_name,
+                    subject: "We're BACK!",
+                    message_html: 
+                    `Jurassic Quest is returning to your area.
+
+                    Visit www.jurassicquest.com for more information`
+                })
+                        .then(function () {
+                            console.log("sent")
+                        }, function (err) {
+                            console.log("Send email failed!\r\n Response:\n " + JSON.stringify(err));
+                        });
+                });
+            })();
+
+
+
+
+
+
+
+
