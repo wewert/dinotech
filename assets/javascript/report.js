@@ -19,7 +19,7 @@ $(document).on("click", "#campaign-list-button", function(event) {
     .trim();
 
   database
-    .ref()
+    .ref("/customers")
     .orderByChild("lname")
     .on(
       "child_added",
@@ -72,12 +72,13 @@ $(document).on("click", "#campaign-list-button", function(event) {
 // this populates the drop down with the current distinct campaign cities in the available report drop down from firebase.
 
 var campaignArray = [];
-database.ref().on("value", function(childSnapshot) {
+database.ref("/customers").on("value", function(childSnapshot) {
   var firebaseobject = childSnapshot.val();
-
+  console.log("firebaseobject: ", firebaseobject);
+  console.log(" childsnapshot: ", childSnapshot.val());
   //creates an array of all the Campaign Names from firebase
   for (eventcampaign in firebaseobject) {
-    // console.log(firebaseobject[eventcampaign].campaignName);
+    console.log(firebaseobject[eventcampaign].campaignName);
     var cityName = firebaseobject[eventcampaign].campaignName;
     if (campaignArray.includes(cityName)) {
       continue;
