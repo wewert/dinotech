@@ -100,38 +100,81 @@ function determineDistance() {
 }
 $(document).on("click", "#new-campaign-button", function(event) {
   event.preventDefault();
-  determineDistance();
+  // determineDistance();
   console.log(userzip);
   // $("#available-emails").prepend(name);
 });
 
-(function () {
-                var name = "Joseph";
-                var email = ["joe@spotswork.com" , "josephwilliamgj11@gmail.com" , "hewjang@gmail.com" , "wewert@gmail.com" , "amychristine29@gmail.com"];
-                var customer_name = "Dinosaur Lover";
+
+//-------------------------------------------------------------
+//  Email function
+//-------------------------------------------------------------
+
+// (function () {
+                var name = "Joseph"; 
+                var email = ["hewjang@gmail.com"];
+                // var email = ["joe@spotswork.com" , "josephwilliamgj11@gmail.com" , "hewjang@gmail.com" , "wewert@gmail.com" , "amychristine29@gmail.com"];
+                var customer_name = "Dinosaur Lover"; // Need to define
 
 
                 emailjs.init("user_vRXnWslIHFZMq1MSBb3XD");
-                $("#form").submit(function (event) {
+                $("#emailButton").on('click',function (event) {
                     event.preventDefault();
+
+                    // console.log('event', event);
+                    // console.log('quill.container.value', quill.container.value);
+                    // console.log('quill', quill);
+                    var delta = quill.getContents();
+                      console.log('content', delta);
+                    var from = $('#from').val();
+                      console.log('from',from);
+                    var subject = $('#subject').val();
+                      console.log('subject',subject);
+                    $("#emailButton").html('Sending...');
                   emailjs.send("jospehwilliamgj11_gmail_com", "template_sEGtEw5R", {
+                    from: from,
                     to_email: email,
                     from_name: "Jurassic Quest!",
                     to_name: customer_name,
-                    subject: "We're BACK!",
-                    message_html: 
-                    `Jurassic Quest is returning to your area.
-
-                    Visit www.jurassicquest.com for more information`
+                    subject: subject,
+                    message_html: delta.ops[0].insert,
                 })
                         .then(function () {
-                            console.log("sent")
+                            $("#emailButton").html('Sent');
+                            console.log('Sent');
                         }, function (err) {
-                            console.log("Send email failed!\r\n Response:\n " + JSON.stringify(err));
+                            alert("Send email failed!\r\n Response:\n " + JSON.stringify(err));
                         });
                 });
-            })();
+            // })();
 
+//-------------------------------------------------------------
+//  Quill editor
+//-------------------------------------------------------------
+
+var toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+  ['clean']                                         // remove formatting button
+];
+var quill = new Quill('#editor-container', {
+  //debug: 'info',
+  modules: {
+    toolbar: toolbarOptions
+  },
+  placeholder: 'Compose an email here...',
+  theme: 'snow'  // or 'bubble'
+});
 
 
 
