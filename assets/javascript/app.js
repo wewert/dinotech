@@ -12,8 +12,8 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-var zipcodes = [80210, 80203, 80218, 80205, 87114, 77090];
-var testZip = 77090;
+// var zipcodes = [80210, 80203, 80218, 80205, 87114, 77090];
+// var testZip = 77090;
 var queryURL =
   "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=80203&tozipcode=80210&key=DEMOAPIKEY";
 var userzip = "";
@@ -22,14 +22,15 @@ var maxDistance = "";
 var users = [];
 var userInput = 0;
 var campaignName = "";
+var customers = [];
 
-var customers = [
-  {
-    fname: "Joe",
-    lname: "Arnold",
-    email: "josephwilliamgj11@gmail.com",
-    zip: 77090
-  }
+// var customers = [
+//   {
+//     fname: "Joe",
+//     lname: "Arnold",
+//     email: "josephwilliamgj11@gmail.com",
+//     zip: 77090
+//   }
   // {
   //   fname: "Ken",
   //   lname: "Lee",
@@ -48,73 +49,39 @@ var customers = [
   //   email: "hewjang@gmail.com",
   //   zip: 80218
   // }
-];
+// ];
 
 function determineDistance() {
-  $.each(customers, function(i, v) {
-    userzip = $("#user-zip")
-      .val()
-      .trim();
-    maxDistance = $("#max-distance")
-      .val()
-      .trim();
-    campaignName = $("#campaign-name")
-      .val()
-      .toUpperCase()
-      .trim();
+  var updatedCustomers = [];
+  var count=0;
+    database.ref("/customers").on("child_added" , function(childSnapshot) {
+      
+    var customer = childSnapshot.val();
+    var zip = customer.zip;
+    var userzip = $("#user-zip").val().trim();
+    var maxDistance = $("#max-distance").val().trim();
+    var campaignName = $("#campaign-name").val().toUpperCase().trim();
 
-    $.ajax({
-      url:
-        "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" +
-        userzip +
-        "&tozipcode=" +
-        v.zip +
-        "&key=WXC5A3ACU3D13WNY58D7",
-      method: "GET"
+  $.ajax({
+    url: "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" +
+    userzip + "&tozipcode=" + zip + "&key=1KD8MCQCP3U9ID1R4ETZ",
+    method: "GET"
+
     }).done(function(response) {
       var results = response.DistanceInMiles;
-
-      database.ref().push({
-        campaignName: campaignName,
-        zip: v.zip,
-        fname: v.fname,
-        lname: v.lname,
-        email: v.email,
-        distance: results
-      });
-
+      // console.log("our distance", results);
       if (results <= maxDistance) {
-        users[i] = {
-          zip: v.zip,
-          fname: v.fname,
-          lname: v.lname,
-          email: v.email,
-          distance: results
+        customer.distance = results;
+        // customerEmail.push(customer.email);
+        // console.log(customer.email);
+        // var customerEmail = [];
+       
+        // customerEmail.push(customer.email);
+        console.log(customer.email);
 
-          //[variable]: value -- this will allow for variable based property names because of the square bracket notation
-        };
-      }
-      console.log("people who we email", users);
-    });
-  });
-}
-$(document).on("click", "#new-campaign-button", function(event) {
-  event.preventDefault();
-  // determineDistance();
-  console.log(userzip);
-  // $("#available-emails").prepend(name);
-});
-
-
-//-------------------------------------------------------------
-//  Email function
-//-------------------------------------------------------------
-
-// (function () {
-                var name = "Joseph"; 
-                var email = ["hewjang@gmail.com"];
-                // var email = ["joe@spotswork.com" , "josephwilliamgj11@gmail.com" , "hewjang@gmail.com" , "wewert@gmail.com" , "amychristine29@gmail.com"];
-                var customer_name = "Dinosaur Lover"; // Need to define
+        var name = "Joseph"; 
+                var email = customer.email;
+                var customer_name = customer.fname; // Need to define
 
 
                 emailjs.init("user_vRXnWslIHFZMq1MSBb3XD");
@@ -146,11 +113,35 @@ $(document).on("click", "#new-campaign-button", function(event) {
                             alert("Send email failed!\r\n Response:\n " + JSON.stringify(err));
                         });
                 });
-            // })();
+         
+        };
+      });
+      });
+    // .then(function(data) {
+        // next line is pseudo code
+        // if (count === database.children("/customers")) {
+          // do our stuff with the updatedCustomers array
+          // console.log(updatedCustomers.email);
+          // console.log(customer.email);
+        // }
+        
+        // you have potential full array here.
+      }
 
-//-------------------------------------------------------------
-//  Quill editor
-//-------------------------------------------------------------
+    // }
+  // };
+
+
+$(document).on("click", "#new-campaign-button", function(event) {
+  event.preventDefault();
+  determineDistance();
+  console.log('joe');
+});
+
+
+// //-------------------------------------------------------------
+// //  Quill editor
+// //-------------------------------------------------------------
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
