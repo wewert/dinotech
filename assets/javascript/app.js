@@ -24,6 +24,8 @@ var userInput = 0;
 var campaignName = "";
 var customers = [];
 
+//this information is now in FB. 
+
 // var customers = [
 //   {
 //     fname: "Joe",
@@ -56,6 +58,8 @@ var customers = [];
 //     zip: 80218
 //   }
 // ];
+
+//this is how I determined distance and filtered the customers when the customers is in the JS file
 
 // function determineDistance() {
 //   $.each(customers, function(i, v) {
@@ -106,20 +110,20 @@ var customers = [];
 //     });
 //   });
 // }
-
+// var cutomerEmail = [];
+// var customerFname = [];
+// var customerLname = []; 
 
 function determineDistance() {
+  var updatedCustomers = [];
+  var count=0;
     database.ref("/customers").on("child_added" , function(childSnapshot) {
-    customers = childSnapshot.val();
-    zip = customers.zip;
-    console.log(customers);
-    console.log(zip);
-
-
-  $.each(customers, function(i, v) {
-    userzip = $("#user-zip").val().trim();
-    maxDistance = $("#max-distance").val().trim();
-    campaignName = $("#campaign-name").val().toUpperCase().trim();
+      
+    var customer = childSnapshot.val();
+    var zip = customer.zip;
+    var userzip = $("#user-zip").val().trim();
+    var maxDistance = $("#max-distance").val().trim();
+    var campaignName = $("#campaign-name").val().toUpperCase().trim();
 
   $.ajax({
     url: "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" +
@@ -128,30 +132,43 @@ function determineDistance() {
 
     }).done(function(response) {
       var results = response.DistanceInMiles;
-
+      // console.log("our distance", results);
       if (results <= maxDistance) {
-        users[i] = {
-          zip: customers.zip,
-          fname: customers.fname,
-          lname: customers.lname,
-          email: customers.email,
-          distance: results
-        };
+        customer.distance = results;
+        // customerEmail.push(customer.email);
+        // console.log(customer.email);
+        // var customerEmail = [];
+        function pushEmails() {
+        customerEmail.push(customer.email);
+        console.log(customerEmail);
 
-          console.log("people who we email", users);
-        }
-      })
-    });
-  });
-}
+      }
+
+        };
+      });
+      });
+    // .then(function(data) {
+        // next line is pseudo code
+        // if (count === database.children("/customers")) {
+          // do our stuff with the updatedCustomers array
+          // console.log(updatedCustomers.email);
+          // console.log(customer.email);
+        // }
+        
+        // you have potential full array here.
+      }
+
+    // }
+  // };
 
 
 $(document).on("click", "#new-campaign-button", function(event) {
   event.preventDefault();
   determineDistance();
-  console.log(userzip);
 });
 
+
+//This is how to email a using Email.JS 
 (function () {
                 var name = "Joseph";
                 var email = [];
