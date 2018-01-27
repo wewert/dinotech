@@ -63,7 +63,7 @@ function determineDistance() {
     var campaignName = $("#campaign-name").val().toUpperCase().trim();
 
   $.ajax({
-    url: "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" +
+    url: "https://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" +
     userzip + "&tozipcode=" + zip + "&key=1KD8MCQCP3U9ID1R4ETZ",
     method: "GET"
 
