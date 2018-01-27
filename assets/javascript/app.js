@@ -72,11 +72,7 @@ function determineDistance() {
       // console.log("our distance", results);
       if (results <= maxDistance) {
         customer.distance = results;
-        // customerEmail.push(customer.email);
-        // console.log(customer.email);
-        // var customerEmail = [];
-       
-        // customerEmail.push(customer.email);
+
         console.log(customer.email);
 
         var name = "Joseph"; 
@@ -88,11 +84,8 @@ function determineDistance() {
                 $("#emailButton").on('click',function (event) {
                     event.preventDefault();
 
-                    // console.log('event', event);
-                    // console.log('quill.container.value', quill.container.value);
-                    // console.log('quill', quill);
-                    var delta = quill.getContents();
-                      console.log('content', delta);
+                    var html = quill.root.innerHTML; 
+                      console.log('content', html);
                     var from = $('#from').val();
                       console.log('from',from);
                     var subject = $('#subject').val();
@@ -104,7 +97,8 @@ function determineDistance() {
                     from_name: "Jurassic Quest!",
                     to_name: customer_name,
                     subject: subject,
-                    message_html: delta.ops[0].insert,
+                    message_html: html 
+
                 })
                         .then(function () {
                             $("#emailButton").html('Sent');
@@ -121,17 +115,9 @@ function determineDistance() {
         // next line is pseudo code
         // if (count === database.children("/customers")) {
           // do our stuff with the updatedCustomers array
-          // console.log(updatedCustomers.email);
-          // console.log(customer.email);
-        // }
-        
+        // }     
         // you have potential full array here.
       }
-
-    // }
-  // };
-
-
 $(document).on("click", "#new-campaign-button", function(event) {
   event.preventDefault();
   determineDistance();
@@ -156,6 +142,8 @@ var toolbarOptions = [
   [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
   [{ 'font': [] }],
   [{ 'align': [] }],
+
+  [ 'link', 'image', 'video', 'formula' ],
   ['clean']                                         // remove formatting button
 ];
 var quill = new Quill('#editor-container', {
@@ -167,7 +155,64 @@ var quill = new Quill('#editor-container', {
   theme: 'snow'  // or 'bubble'
 });
 
+//-------------------------------------------------
+//login
+//-------------------------------------------------
+$('.form').find('input, textarea').on('keyup blur focus', function (e) {
 
+  var $this = $(this),
+      label = $this.prev('label');
+
+    if (e.type === 'keyup') {
+      if ($this.val() === '') {
+          label.removeClass('active highlight');
+        } else {
+          label.addClass('active highlight');
+        }
+    } else if (e.type === 'blur') {
+      if( $this.val() === '' ) {
+        label.removeClass('active highlight');
+      } else {
+        label.removeClass('highlight');
+      }
+    } else if (e.type === 'focus') {
+
+      if( $this.val() === '' ) {
+        label.removeClass('highlight');
+      }
+      else if( $this.val() !== '' ) {
+        label.addClass('highlight');
+      }
+    }
+
+});
+
+$('.tab a').on('click', function (e) {
+
+  e.preventDefault();
+
+  $(this).parent().addClass('active');
+  $(this).parent().siblings().removeClass('active');
+
+  target = $(this).attr('href');
+
+  $('.tab-content > div').not(target).hide();
+
+  $(target).fadeIn(600);
+
+});
+
+function toggle() {
+ if( document.getElementById("hidethis").style.display=='none' ){
+   document.getElementById("hidethis").style.display = 'table-row'; // set to table-row instead of an empty string
+ }else{
+   document.getElementById("hidethis").style.display = 'none';
+ }
+}
+
+function checkZip(value) {
+    return (/(^\d{5}$)|(^\d{5}-\d{4}$)/).test(value);
+};
 
 
 
