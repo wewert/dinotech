@@ -3,6 +3,10 @@ header {
   background: url("../images/barn-board-brown.jpg");
 }
 
+.modal-dialog {
+  height: 800;
+}
+
 #logo {
   max-height: 50%;
   max-width: 100%;

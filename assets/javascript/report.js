@@ -19,7 +19,7 @@ $(document).on("click", "#campaign-list-button", function(event) {
     .trim();
 
   database
-    .ref()
+    .ref("/customers")
     .orderByChild("lname")
     .on(
       "child_added",
@@ -28,7 +28,6 @@ $(document).on("click", "#campaign-list-button", function(event) {
         var fnameCreport = " ";
         var lnameCreport = " ";
         var emailCreport = " ";
-        var distanceCreport = 0;
         var tBody = $("tbody");
         var tRow = $("<tr>");
         //output to the console for debugging
@@ -36,7 +35,6 @@ $(document).on("click", "#campaign-list-button", function(event) {
         console.log(childSnapshot.val().fname);
         console.log(childSnapshot.val().lname);
         console.log(childSnapshot.val().email);
-        console.log(childSnapshot.val().distance);
         var campaignDatabase = childSnapshot.val().campaignName;
         console.log("campaignDatabase: ", campaignDatabase);
         console.log("campaignReport: ", campaignReport);
@@ -48,15 +46,8 @@ $(document).on("click", "#campaign-list-button", function(event) {
           var fnameCreport = $("<td>").text(childSnapshot.val().fname);
           var lnameCreport = $("<td>").text(childSnapshot.val().lname);
           var emailCreport = $("<td>").text(childSnapshot.val().email);
-          var distanceCreport = $("<td>").text(childSnapshot.val().distance);
           //appends rows
-          tRow.append(
-            zipCreport,
-            fnameCreport,
-            lnameCreport,
-            emailCreport,
-            distanceCreport
-          );
+          tRow.append(zipCreport, fnameCreport, lnameCreport, emailCreport);
           // appends rows to body
           tBody.append(tRow);
         }
@@ -72,12 +63,13 @@ $(document).on("click", "#campaign-list-button", function(event) {
 // this populates the drop down with the current distinct campaign cities in the available report drop down from firebase.
 
 var campaignArray = [];
-database.ref().on("value", function(childSnapshot) {
+database.ref("/customers").on("value", function(childSnapshot) {
   var firebaseobject = childSnapshot.val();
-
+  console.log("firebaseobject: ", firebaseobject);
+  console.log(" childsnapshot: ", childSnapshot.val());
   //creates an array of all the Campaign Names from firebase
   for (eventcampaign in firebaseobject) {
-    // console.log(firebaseobject[eventcampaign].campaignName);
+    console.log(firebaseobject[eventcampaign].campaignName);
     var cityName = firebaseobject[eventcampaign].campaignName;
     if (campaignArray.includes(cityName)) {
       continue;
