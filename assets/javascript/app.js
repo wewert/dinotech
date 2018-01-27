@@ -24,12 +24,96 @@ var userInput = 0;
 var campaignName = "";
 var customers = [];
 
+//this information is now in FB. 
 // var customers = [
 //   {
 //     fname: "Joe",
 //     lname: "Arnold",
 //     email: "josephwilliamgj11@gmail.com",
 //     zip: 77090
+
+//   },
+//   {
+//     fname: "Ken",
+//     lname: "Lee",
+//     email: "wewert@gmail.com",
+//     zip: 80210
+//   },
+//   {
+//     fname: "Amy",
+//     lname: "Christine",
+//     email: "amychristine29@gmail.com",
+//     zip: 80203
+//   },
+//   {
+//     fname: "Joseph",
+//     lname: "Arnold",
+//     email: "joe@spotswork.com",
+//     zip: 90210
+//   },
+//   {
+//     fname: "Saijai",
+//     lname: "Osika",
+//     email: "hewjang@gmail.com",
+//     zip: 80218
+//   }
+// ];
+
+//this is how I determined distance and filtered the customers when the customers is in the JS file
+
+// function determineDistance() {
+//   $.each(customers, function(i, v) {
+//     userzip = $("#user-zip")
+//       .val()
+//       .trim();
+//     maxDistance = $("#max-distance")
+//       .val()
+//       .trim();
+//     campaignName = $("#campaign-name")
+//       .val()
+//       .toUpperCase()
+//       .trim();
+
+//     $.ajax({
+//       url:
+//         "http://api.zip-codes.com/ZipCodesAPI.svc/1.0/CalculateDistance/ByZip?fromzipcode=" +
+//         userzip +
+//         "&tozipcode=" +
+//         v.zip +
+//         "&key=WXC5A3ACU3D13WNY58D7",
+//       method: "GET"
+//     }).done(function(response) {
+//       var results = response.DistanceInMiles;
+
+//       if (results <= maxDistance) {
+//         users[i] = {
+//           zip: v.zip,
+//           fname: v.fname,
+//           lname: v.lname,
+//           email: v.email,
+//           distance: results
+//         };
+   
+
+//       database.ref().push({
+//         campaignName: campaignName,
+//         zip: v.zip,
+//         fname: v.fname,
+//         lname: v.lname,
+//         email: v.email,
+//         distance: results
+//       });
+//     }
+
+    
+//       console.log("people who we email", users);
+//     });
+//   });
+// }
+// var cutomerEmail = [];
+// var customerFname = [];
+// var customerLname = []; 
+
 //   }
   // {
   //   fname: "Ken",
@@ -75,6 +159,42 @@ function determineDistance() {
         // customerEmail.push(customer.email);
         // console.log(customer.email);
         // var customerEmail = [];
+
+        function pushEmails() {
+        customerEmail.push(customer.email);
+        console.log(customerEmail);
+
+      }
+
+        };
+      });
+      });
+    // .then(function(data) {
+        // next line is pseudo code
+        // if (count === database.children("/customers")) {
+          // do our stuff with the updatedCustomers array
+          // console.log(updatedCustomers.email);
+          // console.log(customer.email);
+        // }
+        
+        // you have potential full array here.
+      }
+
+    // }
+  // };
+
+
+$(document).on("click", "#new-campaign-button", function(event) {
+  event.preventDefault();
+  determineDistance();
+});
+
+
+//This is how to email a using Email.JS 
+(function () {
+                var name = "Joseph";
+                var email = [];
+                var customer_name = "Dinosaur Lover";
        
         // customerEmail.push(customer.email);
         console.log(customer.email);
@@ -88,6 +208,8 @@ function determineDistance() {
                 $("#emailButton").on('click',function (event) {
                     event.preventDefault();
 
+                    emailjs.send("jospehwilliamgj11_gmail_com", "template_sEGtEw5R", {
+
                     // console.log('event', event);
                     // console.log('quill.container.value', quill.container.value);
                     // console.log('quill', quill);
@@ -100,6 +222,7 @@ function determineDistance() {
                     $("#emailButton").html('Sending...');
                   emailjs.send("jospehwilliamgj11_gmail_com", "template_sEGtEw5R", {
                     from: from,
+
                     to_email: email,
                     from_name: "Jurassic Quest!",
                     to_name: customer_name,
